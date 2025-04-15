@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import ImageK from "./ImageK";
 
 const LeftBar = () => {
   const menuList = [
@@ -67,13 +68,10 @@ const LeftBar = () => {
   ];
   return (
     <div className="h-screen sticky top-0 flex flex-col justify-between pt-2 pb-8">
-      {/* LOGO MENU BUTTON */}
       <div className="flex flex-col gap-4 text-lg items-center xxl:items-start">
-        {/* LOGO */}
         <Link href="/" className="p-2 rounded-full hover:bg-[#181818] ">
-          <Image src="icons/logo.svg" alt="logo" width={24} height={24} />
+          <ImageK path="general/logo.svg" alt="logo" w="24" h="24" />
         </Link>
-        {/* MENU LIST */}
         <div className="flex flex-col gap-4">
           {menuList.map((item) => (
             <Link
@@ -109,16 +107,16 @@ const LeftBar = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-12 h-12 relative rounded-full overflow-hidden">
-            <Image
-              src="/general/avatar.png"
-              alt="lama dev"
-              width={100}
-              height={100}
+            <ImageK
+              path="/general/avatar.jpg"
+              w="100"
+              h="100"
+              alt="Default Image "
             />
           </div>
           <div className="hidden xxl:flex flex-col">
-            <span className="font-bold">Lama Dev</span>
-            <span className="text-sm text-textGray">@lamaWebDev</span>
+            <span className="font-bold">MoSaeed Dev</span>
+            <span className="text-sm text-textGray">@mosaeed7888</span>
           </div>
         </div>
         <div className="hidden xxl:block cursor-pointer font-bold">...</div>
