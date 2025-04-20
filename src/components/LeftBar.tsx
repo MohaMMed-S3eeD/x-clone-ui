@@ -79,11 +79,11 @@ const LeftBar = () => {
               className="p-2 rounded-full hover:bg-[#181818] flex items-center gap-4"
               key={item.id}
             >
-              <Image
-                src={`icons/${item.icon}`}
+              <ImageK
+                path={`icons/${item.icon}`}
                 alt={item.name}
-                width={24}
-                height={24}
+                h="24"
+                w="24"
               />
               <span className="hidden xxl:inline">{item.name}</span>
             </Link>
