@@ -1,5 +1,6 @@
 // import ImageK from "@/components/ImageK";
 import Feed from "@/components/Feed";
+import Share from "@/components/Share";
 import Link from "next/link";
 
 const Homepage = () => {
@@ -14,6 +15,7 @@ const Homepage = () => {
           Follwing
         </Link>
       </div>
+      <Share />
       <Feed />
 
       {/* <ImageK
