@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 const ImageEditor = ({
   onClose,
@@ -23,6 +24,8 @@ const ImageEditor = ({
 }) => {
   // Create a local copy of settings to work with
   const [localSetting, setLocalSetting] = useState(setting);
+  // State to track whether sensitive content is being shown
+  const [showSensitive, setShowSensitive] = useState(false);
 
   // Update local settings when parent settings change
   useEffect(() => {
@@ -73,6 +76,33 @@ const ImageEditor = ({
                   : "aspect-video object-cover max-h-[60vh] max-w-full"
               }`}
             />
+            
+            {/* Sensitive content overlay */}
+            {localSetting.sensitive && !showSensitive && (
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg">
+                <span className="text-white text-sm font-medium bg-neutral-800/80 px-4 py-2 rounded-lg mb-3">
+                  Sensitive Content
+                </span>
+                <button
+                  onClick={() => setShowSensitive(true)}
+                  className="flex items-center gap-2 bg-neutral-800/80 hover:bg-neutral-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  <IoEyeOutline className="w-4 h-4" />
+                  View Content
+                </button>
+              </div>
+            )}
+            
+            {/* Show "Hide Content" button when viewing sensitive content */}
+            {localSetting.sensitive && showSensitive && (
+              <button
+                onClick={() => setShowSensitive(false)}
+                className="absolute top-2 right-2 flex items-center gap-2 bg-neutral-800/80 hover:bg-neutral-700 text-white px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
+              >
+                <IoEyeOffOutline className="w-3.5 h-3.5" />
+                Hide Content
+              </button>
+            )}
           </div>
         </div>
 
@@ -117,12 +147,13 @@ const ImageEditor = ({
                       ? "bg-red-600 text-white shadow-md"
                       : "hover:bg-neutral-700 text-neutral-300"
                   }`}
-                  onClick={() =>
+                  onClick={() => {
                     setLocalSetting((prev) => ({
                       ...prev,
                       sensitive: !prev.sensitive,
-                    }))
-                  }
+                    }));
+                    setShowSensitive(false); // Hide content when marking as sensitive
+                  }}
                 >
                   {localSetting.sensitive ? "Sensitive" : "Not Sensitive"}
                 </button>

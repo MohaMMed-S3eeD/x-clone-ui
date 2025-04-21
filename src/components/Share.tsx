@@ -4,11 +4,13 @@ import ImageK from "./ImageK";
 import { shareAction } from "@/actions";
 import Image from "next/image";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
 import ImageEditor from "./ImageEditor";
 
 const Share = () => {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [showSensitive, setShowSensitive] = useState(false);
   const [setting, setSetting] = useState<{
     type: "original" | "wide" | "square";
     sensitive: boolean;
@@ -31,6 +33,13 @@ const Share = () => {
     }
   };
   const prevUrl = file ? URL.createObjectURL(file!) : null;
+
+  React.useEffect(() => {
+    if (!setting.sensitive) {
+      setShowSensitive(false);
+    }
+  }, [setting.sensitive]);
+
   return (
     <form
       action={shareAction}
@@ -48,7 +57,6 @@ const Share = () => {
           className="w-full bg-transparent outline-none text-md placeholder:text-textGray"
         />
 
-        {/* prev medie */}
         {prevUrl && (
           <div className="relative">
             <Image
@@ -64,25 +72,45 @@ const Share = () => {
                   : "max-h-[500px] object-contain"
               }`}
             />
-            {setting.sensitive && (
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                <span className="text-white text-sm font-medium bg-neutral-800/80 px-4 py-2 rounded-lg">
+            {setting.sensitive && !showSensitive && (
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg">
+                <span className="text-white text-sm font-medium bg-neutral-800/80 px-4 py-2 rounded-lg mb-3">
                   Sensitive Content
                 </span>
+                <button
+                  type="button"
+                  onClick={() => setShowSensitive(true)}
+                  className="flex items-center gap-2 bg-neutral-800/80 hover:bg-neutral-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  <IoEyeOutline className="w-4 h-4" />
+                  View Content
+                </button>
               </div>
             )}
+            {setting.sensitive && showSensitive && (
+              <button
+                type="button"
+                onClick={() => setShowSensitive(false)}
+                className="absolute bottom-4 right-1 flex items-center gap-2 bg-neutral-800/80 hover:bg-neutral-700 text-white px-3 py-1.5 rounded-full text-xs font-medium transition-colors z-10"
+              >
+                <IoEyeOffOutline className="w-3.5 h-3.5" />
+                Hide Content
+              </button>
+            )}
             <button
+              type="button"
               onClick={() => setIsEditorOpen(true)}
-              className="absolute top-2 left-2 bg-gray-900/60 hover:bg-gray-900/80 text-white px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
+              className="absolute top-2 left-2 bg-gray-900/60 hover:bg-gray-900/80 text-white px-4 py-1.5 rounded-full text-sm font-medium transition-colors z-10"
             >
               Edit
             </button>
             <button
+              type="button"
               title="Remove image"
               onClick={() => {
                 setFile(null);
               }}
-              className="absolute top-2 right-2 bg-gray-900/60 hover:bg-gray-900/80 text-white p-2 rounded-full text-xl transition-all duration-200 hover:scale-110 hover:rotate-90 flex items-center justify-center"
+              className={`absolute ${setting.sensitive && showSensitive ? 'top-2' : 'top-2'} right-2 bg-gray-900/60 hover:bg-gray-900/80 text-white p-2 rounded-full text-xl transition-all duration-200 hover:scale-110 hover:rotate-90 flex items-center justify-center z-10`}
             >
               <IoCloseCircleOutline className="w-5 h-5" />
             </button>
