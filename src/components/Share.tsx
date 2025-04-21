@@ -56,8 +56,21 @@ const Share = () => {
               alt="media"
               width={600}
               height={600}
-              className="rounded-lg mt-2 overflow-hidden"
+              className={`rounded-lg mt-2 overflow-hidden ${
+                setting.type === "square"
+                  ? "aspect-square object-cover"
+                  : setting.type === "wide"
+                  ? "aspect-video object-cover"
+                  : "max-h-[500px] object-contain"
+              }`}
             />
+            {setting.sensitive && (
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+                <span className="text-white text-sm font-medium bg-neutral-800/80 px-4 py-2 rounded-lg">
+                  Sensitive Content
+                </span>
+              </div>
+            )}
             <button
               onClick={() => setIsEditorOpen(true)}
               className="absolute top-2 left-2 bg-gray-900/60 hover:bg-gray-900/80 text-white px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
@@ -77,7 +90,7 @@ const Share = () => {
         )}
         {prevUrl && isEditorOpen && (
           <ImageEditor
-          prevUrlEditor={prevUrl}
+            prevUrlEditor={prevUrl}
             onClose={() => {
               setIsEditorOpen(false);
             }}
