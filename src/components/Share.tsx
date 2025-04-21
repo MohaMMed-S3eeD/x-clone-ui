@@ -3,8 +3,19 @@ import React, { useState } from "react";
 import ImageK from "./ImageK";
 import { shareAction } from "@/actions";
 import Image from "next/image";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import { FaEarthAmericas } from "react-icons/fa6";
+import ImageEditor from "./ImageEditor";
 
 const Share = () => {
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [setting, setSetting] = useState<{
+    type: "original" | "wide" | "square";
+    sensitive: boolean;
+  }>({
+    type: "original",
+    sensitive: false,
+  });
   const iconButtons = [
     { path: "icons/gif.svg", alt: "GIF" },
     { path: "icons/poll.svg", alt: "Poll" },
@@ -39,7 +50,7 @@ const Share = () => {
 
         {/* prev medie */}
         {prevUrl && (
-          <div>
+          <div className="relative">
             <Image
               src={prevUrl}
               alt="media"
@@ -47,11 +58,37 @@ const Share = () => {
               height={600}
               className="rounded-lg mt-2 overflow-hidden"
             />
+            <button
+              onClick={() => setIsEditorOpen(true)}
+              className="absolute top-2 left-2 bg-gray-900/60 hover:bg-gray-900/80 text-white px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
+            >
+              Edit
+            </button>
+            <button
+              title="Remove image"
+              onClick={() => {
+                setFile(null);
+              }}
+              className="absolute top-2 right-2 bg-gray-900/60 hover:bg-gray-900/80 text-white p-2 rounded-full text-xl transition-all duration-200 hover:scale-110 hover:rotate-90 flex items-center justify-center"
+            >
+              <IoCloseCircleOutline className="w-5 h-5" />
+            </button>
           </div>
         )}
+        {prevUrl && isEditorOpen && (
+          <ImageEditor
+          prevUrlEditor={prevUrl}
+            onClose={() => {
+              setIsEditorOpen(false);
+            }}
+            setting={setting}
+            setSetting={setSetting}
+          />
+        )}
 
-        <div className="pl-1 text-sm font-medium text-blue-400 cursor-pointer">
-          Reply on public
+        <div className="pl-1 text-xs font-medium text-blue-400 cursor-pointer flex items-center gap-1 mt-2">
+          <FaEarthAmericas />
+          Who can reply?
         </div>
 
         <hr className="my-2 border-borderGray" />
