@@ -12,7 +12,7 @@ export const shareAction = async (formData: FormData) => {
 
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-
+  console.log("formData is : -------- ",formData);
   imagekit.upload(
     {
       file: buffer,

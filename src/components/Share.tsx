@@ -42,7 +42,11 @@ const Share = () => {
 
   return (
     <form
-      action={shareAction}
+      action={(formData: FormData) => {
+        // Add setting data to formData
+        formData.append('setting', JSON.stringify(setting));
+        shareAction(formData);
+      }}
       className="flex justify-start w-full p-2 border-b-[1px] border-borderGray"
     >
       <div className="relative flex justify-start items-center w-12 h-12 sm:w-14 sm:h-14 overflow-hidden rounded-full xsm:rounded-lg sm:rounded-full">
@@ -110,7 +114,9 @@ const Share = () => {
               onClick={() => {
                 setFile(null);
               }}
-              className={`absolute ${setting.sensitive && showSensitive ? 'top-2' : 'top-2'} right-2 bg-gray-900/60 hover:bg-gray-900/80 text-white p-2 rounded-full text-xl transition-all duration-200 hover:scale-110 hover:rotate-90 flex items-center justify-center z-10`}
+              className={`absolute ${
+                setting.sensitive && showSensitive ? "top-2" : "top-2"
+              } right-2 bg-gray-900/60 hover:bg-gray-900/80 text-white p-2 rounded-full text-xl transition-all duration-200 hover:scale-110 hover:rotate-90 flex items-center justify-center z-10`}
             >
               <IoCloseCircleOutline className="w-5 h-5" />
             </button>
