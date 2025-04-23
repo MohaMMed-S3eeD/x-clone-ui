@@ -2,8 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  serverActions: {
-    bodySizeLimit: '13mb', // زوّد الحد لـ 2 ميجابايت
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "50mb"
+    } // زوّد الحد لـ 2 ميجابايت
+  },
+  images: {
+    domains: ['ik.imagekit.io'],
   },
 };
 

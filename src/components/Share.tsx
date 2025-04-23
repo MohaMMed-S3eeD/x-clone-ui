@@ -39,14 +39,10 @@ const Share = () => {
       setShowSensitive(false);
     }
   }, [setting.sensitive]);
-
+  console.log(file, "file");
   return (
     <form
-      action={(formData: FormData) => {
-        // Add setting data to formData
-        formData.append('setting', JSON.stringify(setting));
-        shareAction(formData);
-      }}
+      action={(formData) => shareAction(formData, setting)}
       className="flex justify-start w-full p-2 border-b-[1px] border-borderGray"
     >
       <div className="relative flex justify-start items-center w-12 h-12 sm:w-14 sm:h-14 overflow-hidden rounded-full xsm:rounded-lg sm:rounded-full">
@@ -61,7 +57,7 @@ const Share = () => {
           className="w-full bg-transparent outline-none text-md placeholder:text-textGray"
         />
 
-        {prevUrl && (
+        {file?.type == "image/png" && prevUrl && (
           <div className="relative">
             <Image
               src={prevUrl}
@@ -132,6 +128,59 @@ const Share = () => {
             setSetting={setSetting}
           />
         )}
+
+        {
+          file?.type == "video/mp4" && prevUrl && (
+            <div className="relative">
+              <video
+                src={prevUrl}
+                controls
+                className={`rounded-lg mt-2 overflow-hidden w-full ${
+                  setting.type === "square"
+                    ? "aspect-square object-cover"
+                    : setting.type === "wide"
+                    ? "aspect-video object-cover"
+                    : "max-h-[500px] object-contain"
+                }`}
+              />
+              {setting.sensitive && !showSensitive && (
+                <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg">
+                  <span className="text-white text-sm font-medium bg-neutral-800/80 px-4 py-2 rounded-lg mb-3">
+                    Sensitive Content
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowSensitive(true)}
+                    className="flex items-center gap-2 bg-neutral-800/80 hover:bg-neutral-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    <IoEyeOutline className="w-4 h-4" />
+                    View Content
+                  </button>
+                </div>
+              )}
+              {setting.sensitive && showSensitive && (
+                <button
+                  type="button"
+                  onClick={() => setShowSensitive(false)}
+                  className="absolute bottom-4 right-1 flex items-center gap-2 bg-neutral-800/80 hover:bg-neutral-700 text-white px-3 py-1.5 rounded-full text-xs font-medium transition-colors z-10"
+                >
+                  <IoEyeOffOutline className="w-3.5 h-3.5" />
+                  Hide Content
+                </button>
+              )}
+              <button
+                type="button"
+                title="Remove video"
+                onClick={() => {
+                  setFile(null);
+                }}
+                className="absolute top-2 right-2 bg-gray-900/60 hover:bg-gray-900/80 text-white p-2 rounded-full text-xl transition-all duration-200 hover:scale-110 hover:rotate-90 flex items-center justify-center z-10"
+              >
+                <IoCloseCircleOutline className="w-5 h-5" />
+              </button>
+            </div>
+          )
+        }
 
         <div className="pl-1 text-xs font-medium text-blue-400 cursor-pointer flex items-center gap-1 mt-2">
           <FaEarthAmericas />

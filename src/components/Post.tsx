@@ -2,8 +2,34 @@ import React from "react";
 import ImageK from "./ImageK";
 import PostInfo from "./PostInfo";
 import PostInteractions from "./PostInteractions";
+import { imagekit } from "@/utils";
+import Image from "next/image";
 
-const Post = () => {
+interface FileDetailsResponse {
+  width: number;
+  height: number;
+  filePath: string;
+  url: string;
+  fileType: string;
+  customMetadata?: { sensitive: boolean };
+}
+const Post = async ({ fileIdP }: { fileIdP: string }) => {
+  //  FETCH POST MEDIA
+
+  const getFileDetails = async (
+    fileId: string
+  ): Promise<FileDetailsResponse> => {
+    return new Promise((resolve, reject) => {
+      imagekit.getFileDetails(fileId, function (error, result) {
+        if (error) reject(error);
+        else resolve(result as FileDetailsResponse);
+      });
+    });
+  };
+
+  const fileDetails = await getFileDetails(fileIdP);
+
+  console.log(fileDetails);
   return (
     <div className="m-2 border-borderGray border-[1px]">
       <div className="flex gap-2 m-1">
@@ -26,18 +52,46 @@ const Post = () => {
           </div>
           {/* Text */}
           <div className="text-slate-400 text-sm sm:line-clamp-3 line-clamp-1 ">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+            ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
             voluptas, quisquam dolores dolorem, accusantium dolore saepe illum,
             sapiente repudiandae incidunt voluptatem.
           </div>
           {/* Image */}
-          <ImageK
+          {/* <ImageK
             path="general/post.jpeg"
             w="600"
             h="600  "
             alt="test"
             className="rounded-lg mt-2 "
-          />
+          /> */}
+
+          {fileDetails && fileDetails.fileType == "image" && (
+            <Image
+              src={fileDetails.url}
+              width={fileDetails.width}
+              height={fileDetails.height}
+              className={`${
+                fileDetails.customMetadata?.sensitive ? "blur-lg" : ""
+              }rounded-lg mt-2 overflow-hidden min-w-full max-h-[450px]  `}
+              alt={fileDetails.fileType}
+            />
+          )}
+          {fileDetails && fileDetails.fileType == "non-image" && (
+            <div className="video-container relative rounded-lg mt-2 overflow-hidden">
+              <video
+                className="w-full max-h-[400px] object-contain rounded-lg"
+                controls
+                preload="metadata"
+                playsInline
+                width={fileDetails.width}
+                height="auto"
+              >
+                <source src={fileDetails.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
+
           <PostInteractions
             likes={100}
             retweets={150}
