@@ -72,7 +72,7 @@ const Post = async ({ fileIdP }: { fileIdP: string }) => {
               height={fileDetails.height}
               className={`${
                 fileDetails.customMetadata?.sensitive ? "blur-lg" : ""
-              }rounded-lg mt-2 overflow-hidden min-w-full max-h-[450px]  `}
+              }rounded-lg mt-2 overflow-hidden min-w-full max-h-[450px] object-cover`}
               alt={fileDetails.fileType}
             />
           )}
