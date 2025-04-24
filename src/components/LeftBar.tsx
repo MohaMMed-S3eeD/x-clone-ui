@@ -56,7 +56,7 @@ const LeftBar = () => {
     {
       id: 9,
       name: "Profile",
-      link: "/",
+      link: "/Profile",
       icon: "profile.svg",
     },
     {
