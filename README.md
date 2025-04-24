@@ -3,9 +3,7 @@
 ![GitHub](https://img.shields.io/badge/Next.js-15.1.0-black)
 ![GitHub](https://img.shields.io/badge/React-19.0.0-blue)
 ![GitHub](https://img.shields.io/badge/Tailwind-3.4.1-cyan)
- <img src="https://img.shields.io/badge/✨-Modern%20UI-blue" alt="Modern UI"/> <img src="https://img.shields.io/badge/🔥-Responsive-orange" alt="Responsive"/> <img src="https://img.shields.io/badge/⚡-Fast-yellow" alt="Fast"/>
-
-
+<img src="https://img.shields.io/badge/✨-Modern%20UI-blue" alt="Modern UI"/> <img src="https://img.shields.io/badge/🔥-Responsive-orange" alt="Responsive"/> <img src="https://img.shields.io/badge/⚡-Fast-yellow" alt="Fast"/>
 
 <div align="center">
   <h3>🌐 <a href="https://x-mo.vercel.app/">Live Demo</a> 🌐</h3>
@@ -42,7 +40,7 @@
             <p style="margin: 0; color: #cccccc;">Mark sensitive content with blur effects.</p>
           </td>
         </tr>
-                <tr>
+        <tr>
           <td style="width: 80px; text-align: center; background-color: #1a1a1a; border-radius: 10px 0 0 10px; border-right: 1px solid #333;">
             <span style="font-size: 2em;">🎮</span>
           </td>
@@ -65,7 +63,7 @@
             <p style="margin: 0; color: #cccccc;">Crop and format images before posting.</p>
           </td>
         </tr>
-               <tr>
+        <tr>
           <td style="width: 80px; text-align: center; background-color: #1a1a1a; border-radius: 10px 0 0 10px; border-right: 1px solid #333;">
             <span style="font-size: 2em;">👍</span>
           </td>
@@ -74,7 +72,7 @@
             <p style="margin: 0; color: #cccccc;">Like, retweet, comment, and share posts.</p>
           </td>
         </tr>
-               <tr>
+        <tr>
           <td style="width: 80px; text-align: center; background-color: #1a1a1a; border-radius: 10px 0 0 10px; border-right: 1px solid #333;">
             <span style="font-size: 2em;">📱</span>
           </td>
@@ -138,7 +136,15 @@
    pnpm install
    ```
 
-3. Start the development server:
+3. Set up environment variables:
+   Create a `.env` file in the root directory with the following:
+   ```
+   NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=your_public_key
+   NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=your_url_endpoint
+   IMAGEKIT_PRIVATE_KEY=your_private_key
+   ```
+
+4. Start the development server:
    ```bash
    npm run dev
    # or
@@ -147,7 +153,7 @@
    pnpm dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -248,6 +254,28 @@ const MyFeed = () => {
 };
 ```
 
+### ImageEditor Component
+
+```tsx
+import ImageEditor from '@/components/ImageEditor';
+
+const MyEditor = () => {
+  const [setting, setSetting] = useState({
+    type: "original",
+    sensitive: false
+  });
+
+  return (
+    <ImageEditor
+      prevUrlEditor="image-url"
+      onClose={() => setIsEditorOpen(false)}
+      setting={setting}
+      setSetting={setSetting}
+    />
+  );
+};
+```
+
 ---
 
 ## ⚙️ Configuration
@@ -259,6 +287,27 @@ This project uses ImageKit for image handling. You'll need to set up your accoun
 ### Tailwind Customization
 
 The Tailwind configuration includes custom screen sizes and colors specific to the Twitter/X interface. You can modify them in `tailwind.config.ts`.
+
+---
+
+## 🚀 Roadmap
+
+### Upcoming Features
+
+- 🔐 User authentication and profiles
+- 💬 Comments and replies to posts
+- 🔔 Real-time notifications
+- 🌓 Light/dark theme toggle
+- 📊 Analytics dashboard
+- 📱 Mobile app-like gestures
+- 🔍 Advanced search functionality
+
+### Technical Improvements
+
+- ⚡ Performance optimization with virtualized lists
+- ♿ Enhanced accessibility features
+- 🧪 Unit and integration tests
+- 📦 State management with Redux/Zustand
 
 ---
 
