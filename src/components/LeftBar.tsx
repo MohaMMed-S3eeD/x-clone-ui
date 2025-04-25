@@ -72,7 +72,7 @@ const LeftBar = () => {
         <Link href="/" className="p-2 rounded-full hover:bg-[#181818] ">
           <ImageK path="general/logo.svg" alt="logo" w="24" h="24" />
         </Link>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           {menuList.map((item) => (
             <Link
               href={item.link}
@@ -85,7 +85,7 @@ const LeftBar = () => {
                 h="24"
                 w="24"
               />
-              <span className="hidden xxl:inline">{item.name}</span>
+              <span className="hidden  xxl:inline">{item.name}</span>
             </Link>
           ))}
         </div>
