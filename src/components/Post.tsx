@@ -1,4 +1,3 @@
-
 import React from "react";
 import ImageK from "./ImageK";
 import PostInfo from "./PostInfo";
@@ -77,17 +76,23 @@ const Post = async ({ fileIdP }: { fileIdP: string }) => {
               alt={fileDetails.fileType}
             />
           )}
-          {fileDetails && fileDetails.fileType == "non-image" && (
-            <div className="video-container relative rounded-lg mt-2 overflow-hidden">
+          {fileDetails && fileDetails.fileType === "non-image" && (
+            <div className="video-container relative rounded-lg mt-2 overflow-hidden  aspect-video shadow-lg">
               <video
-                className="w-full max-h-[400px] object-contain rounded-lg"
+                className="w-full max-h-[400px] sm:max-h-[300px] object-contain rounded-lg"
                 controls
                 preload="metadata"
                 playsInline
-                width={fileDetails.width}
                 height="auto"
+                aria-label="Video content description"
               >
                 <source src={fileDetails.url} type="video/mp4" />
+                <track
+                  src="path/to/subtitles.vtt"
+                  kind="subtitles"
+                  srcLang="en"
+                  label="English"
+                />
                 Your browser does not support the video tag.
               </video>
             </div>
