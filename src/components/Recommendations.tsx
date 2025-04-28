@@ -12,7 +12,7 @@ const Recommendations = () => {
           <div className="flex items-center gap-2">
             <div className="relative rounded-full overflow-hidden w-10 h-10">
               <ImageK
-                path="general/avatar.jpg"
+                path="general/avatar1.png"
                 alt="John Doe"
                 w="100"
                 h="100"
@@ -34,7 +34,7 @@ const Recommendations = () => {
           <div className="flex items-center gap-2">
             <div className="relative rounded-full overflow-hidden w-10 h-10">
               <ImageK
-                path="general/avatar.jpg"
+                path="general/avatar2.png"
                 alt="John Doe"
                 w="100"
                 h="100"
@@ -56,7 +56,7 @@ const Recommendations = () => {
           <div className="flex items-center gap-2">
             <div className="relative rounded-full overflow-hidden w-10 h-10">
               <ImageK
-                path="general/avatar.jpg"
+                path="general/avatar3.png"
                 alt="John Doe"
                 w="100"
                 h="100"
